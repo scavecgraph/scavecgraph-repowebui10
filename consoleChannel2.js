@@ -311,6 +311,7 @@ function validateSite() {
     var finalUrl = BASEURL + "jquery/validateRepoSite/?siteHost=" + SITEURL.hostname;
     if(DEBUG){
         console.log("VALIDATE SITE URL : " + finalUrl);
+    }
     $.ajax({
         url: finalUrl
     }).then(function (data) {
