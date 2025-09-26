@@ -791,7 +791,7 @@ function viewContextSvg(contextId, addViewContextIcon, clearContextIcons) {
             if(DEBUG){
                 console.log("contentFrm - setvisibilityto : visible - visibility : " + $("#contentFrm").css("visibility"));
             }
-            $("#contentFrm").css("visibility")
+            $("#contentFrm").css("visibility");
             setTimeout(getContentHtmlSvgAfter(),500);
         }
         , 600);
