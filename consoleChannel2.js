@@ -4,7 +4,7 @@
  * the repo rest is then determined from here and accessed accordingly
 */
 var DEBUG = false;
-var PARENTORIGIN = null;
+						
 var PUBLICKEY = "";
 var VISITORIP = "";
 var CDNROOTDIR = "";
@@ -74,21 +74,21 @@ var styleSupport2 = "@supports selector(::-webkit-scrollbar) {.scroller {text-al
 var styleGlass = ".glass{position:relative;display:inline-block;background-color:DARKCOLOR;background-image:linear-gradient(DARKCOLOR,LIGHTCOLOR);padding: 0px 0px 0px FONTMARGINLEFTGLASSpx !important;height:50px;width:50px;color:#fff;font-size:40px;font-family:sans-serif;font-weight:bold;border-radius:3px;box-shadow:0px 1px 4px -2px DARKESTCOLOR;text-shadow:0px -1px DARKESTCOLOR;cursor:pointer;}.glass:after{content:'';position:absolute;top:2px;left:2px;width:calc(100% - 4px);height:50%;background:linear-gradient(rgba(255,255,255,0.8),rgba(255,255,255,0.2));}.glass:hover{background:linear-gradient(LIGHTCOLOR,LIGHTERCOLOR);}";
 var styleMat = ".mat{position: relative;display: inline-block;background-color: DARKCOLOR;border-radius: 3px;border: 2px solid DARKESTCOLOR;padding: 0px 0px FONTMARGINBOTMATpx FONTMARGINLEFTMATpx !important;height:50px;width:50px;color:#fff;font-size:40px;font-family:sans-serif;font-weight:bold;cursor:pointer;}";
 
-// Listen for messages from the parent
-window.addEventListener('message', function(event) {
-    console.log("*** EVENT 1 ********************");
-    if (typeof event.data === 'string' && event.data.startsWith('embedPortal')) { 
-        console.log('PARENT ORIGIN : ', event.origin);
-        PARENTORIGIN = event.origin;
-        console.log('PARENTORIGIN : ', PARENTORIGIN);        
-    }
-}); 
+									  
+													
+													
+																				  
+													  
+									
+															 
+	 
+	
 
 $(document).ready(function () {
 
     console.log("JQUERY READY");
 
-    window.parent.postMessage('iframeReady', '*');
+												  
 
     DEBUG = (new URL(location.href)).searchParams.get('debug');
     if(DEBUG !== null && (DEBUG === "true" || DEBUG === "TRUE")){
@@ -123,15 +123,15 @@ $(document).ready(function () {
         body.append(HTML);
         if(DEBUG){
             console.log("HTML TEMPLATE APPENDED");
-        }
-        console.log('PARENTORIGIN : ', PARENTORIGIN);
+        }        
+													 
         buildUI();
     }, 'text');
 
 });
 
 function buildUI() {
-    console.log('BUILD UI'); 
+     
     if(DEBUG){
         console.log("*** buildUI");        
     }
@@ -144,15 +144,16 @@ function buildUI() {
     $('#deviceWidth').html($(window).width());
     $('#deviceHeight').html($(window).height());
 
-    console.log("CHANNEL HAS PARENT : " + hasParent());    
-    console.log("PARENTORIGIN : " + PARENTORIGIN);
-    
-    if(PARENTORIGIN !== null){
-        PARENTURL = PARENTORIGIN;
-    }else{
-        PARENTURL = (window.location !== window.parent.location) ? document.referrer : document.location;        
-    }
+														   
+												  
+	
+							  
+								 
+		  
+    PARENTURL = (window.location !== window.parent.location) ? document.referrer : document.location;
+	 
 
+    console.log("CHANNEL HAS PARENT : " + hasParent());
     console.log("PARENTURL : " + PARENTURL);
 
     SITEURL = new URL(PARENTURL);
@@ -308,7 +309,8 @@ function validateSite() {
     var path = SITEURL.pathname.split('/');
     var domain = path[1];
     console.log("HOST : " + SITEURL.hostname);
-    var finalUrl = BASEURL + "jquery/validateRepoSite/?siteHost=" + SITEURL.hostname;
+    console.log("DOMAIN : " + domain);
+    var finalUrl = BASEURL + "jquery/validateRepoSite/?siteHost=" + SITEURL.hostname + "&siteDomain=" + domain;
     $.ajax({
         url: finalUrl
     }).then(function (data) {
@@ -390,7 +392,7 @@ function renderRootThumbtag(index, rootContext) {
 
 function configureUI() {
     if(DEBUG){
-        console.log("*** configureUI");
+        console.log("*** configureUI");        
     }
     
     autoScale();
@@ -529,10 +531,10 @@ function listenMessage() {
         let cmmnd = event.data;
         doSwitch(cmmnd);
     } else {
-        try {
-            let cmmnd = JSON.parse(event.data);
-            doSwitch(cmmnd);
-        } catch (e) {}        
+			 
+        let cmmnd = JSON.parse(event.data);
+        doSwitch(cmmnd);
+							  
     }
 }
 
@@ -551,7 +553,10 @@ function doSwitch(cmmnd){
 }
 
 window.addEventListener('message', function(event) {
-    console.log("*** EVENT 2 ********************");
+    // NB THIS CHECKS THE DOMAIN OF THE WEBSITE  EMBEDDING THE CHANNEL
+    if (typeof event.data === 'string' && event.data.startsWith('embedPortal')) { 
+        console.log('PARENT ORIGIN FOR VALIDATING : ', event.origin);
+    }
     if (event.data !== null && event.data.visibility !== null && event.data.visibility === 'hidden' || event.data.visibility === 'visible') {
         $("#contentFrm").css("visibility", event.data.visibility);
         if(DEBUG !== null){
