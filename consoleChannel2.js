@@ -76,8 +76,8 @@ var styleMat = ".mat{position: relative;display: inline-block;background-color: 
 
 // Listen for messages from the parent
 window.addEventListener('message', function(event) {
-    console.log("*** EVENT 1 ********************");
     if (typeof event.data === 'string' && event.data.startsWith('embedPortal')) { 
+        console.log("*** POST MESSAGE EVENT embedPortal ********************");        
         console.log('PARENT ORIGIN : ', event.origin);
         PARENTORIGIN = event.origin;
         console.log('PARENTORIGIN : ', PARENTORIGIN);        
@@ -309,6 +309,8 @@ function validateSite() {
     var domain = path[1];
     console.log("HOST : " + SITEURL.hostname);
     var finalUrl = BASEURL + "jquery/validateRepoSite/?siteHost=" + SITEURL.hostname;
+    if(DEBUG){
+        console.log("VALIDATE SITE URL : " + finalUrl);
     $.ajax({
         url: finalUrl
     }).then(function (data) {
@@ -317,12 +319,14 @@ function validateSite() {
             PARENTREGISTERED = true;
         } else {
             if (parseInt(data) > 0) {
-                console.log("REGISTERED WEBSITE NUMBER : " + data);
+                console.log("REGISTERED WEBSITE ID : " + data);
                 PARENTREGISTERED = true;
             } else if (parseInt(data) === 0) {
+                console.log("NON REGISTERED WEBSITE ID : " + data);
                 PARENTREGISTERED = false;
                 window.location = CDNROOTDIR + "images/viewProhibited.svg";
             } else if (parseInt(data) === -1) {
+                console.log("NON REGISTERED WEBSITE ID : " + data);
                 PARENTREGISTERED = false;
             }
         }
@@ -551,8 +555,8 @@ function doSwitch(cmmnd){
 }
 
 window.addEventListener('message', function(event) {
-    console.log("*** EVENT 2 ********************");
     if (event.data !== null && event.data.visibility !== null && event.data.visibility === 'hidden' || event.data.visibility === 'visible') {
+        console.log("*** POST MESSAGE EVENT visibility ********************");        
         $("#contentFrm").css("visibility", event.data.visibility);
         if(DEBUG !== null){
             console.log('contentFrm - setvisibilityto : ', event.data.visibility + " - visibility : " + $("#contentFrm").css("visibility"));
