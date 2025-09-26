@@ -309,7 +309,6 @@ function validateSite() {
     var domain = path[1];
     console.log("HOST : " + SITEURL.hostname);
     var finalUrl = BASEURL + "jquery/validateRepoSite/?siteHost=" + SITEURL.hostname;
-    console.log("VALIDATE SITE URL : " + finalUrl);
     $.ajax({
         url: finalUrl
     }).then(function (data) {
@@ -318,14 +317,12 @@ function validateSite() {
             PARENTREGISTERED = true;
         } else {
             if (parseInt(data) > 0) {
-                console.log("REGISTERED WEBSITE ID : " + data);
+                console.log("REGISTERED WEBSITE NUMBER : " + data);
                 PARENTREGISTERED = true;
             } else if (parseInt(data) === 0) {
-                console.log("PROHIBIT NON REGISTERED WEBSITE ID : " + data);
                 PARENTREGISTERED = false;
                 window.location = CDNROOTDIR + "images/viewProhibited.svg";
             } else if (parseInt(data) === -1) {
-                console.log("NON REGISTERED WEBSITE ID : " + data);
                 PARENTREGISTERED = false;
             }
         }
