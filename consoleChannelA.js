@@ -1,4 +1,5 @@
 /* 
+VER 2
  * BASEURL is a variable existing in the page calling this framework
  * through a script element referencing this specific javascript file
  * the repo rest is then determined from here and accessed accordingly
@@ -211,10 +212,10 @@ function buildUI() {
         // OVERRIDE DIMENSIONS TO FIT IFRAME
         PARWHEXIST = true;        
         WIDTH = $(window).width() - 10;
-        HEIGHT = parent.document.body.clientHeight - 32;
+        //HEIGHT = parent.document.body.clientHeight - 32;
     }else if(ISTOUCHDEVICE && !hasParent()){
         WIDTH = $(window).width() - 6;
-        HEIGHT = parent.document.body.clientHeight - 32;
+        //HEIGHT = parent.document.body.clientHeight - 32;
     }
     
     if (fitWidth !== null && fitWidth !== "") {
